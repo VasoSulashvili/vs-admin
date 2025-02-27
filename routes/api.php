@@ -7,8 +7,11 @@ use VS\Admin\Http\Controllers\LoginController;
 
 // Auth Routes
 // Guest Routes
+Route::get('test', function () {
+    return 'test';
+});
 Route::group(['middleware' => 'vs-auth.client.auth', 'as' => 'vs.admin.'], function () {
     Route::post('register', RegisterController::class)->name('register');
-    Route::get('login', LoginController::class)->name('login');
+    Route::post('login', LoginController::class)->name('login');
 });
 

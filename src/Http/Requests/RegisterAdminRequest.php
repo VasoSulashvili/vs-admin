@@ -24,10 +24,10 @@ class RegisterAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string', 'max:255'],
-            'surname' => ['sometimes', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:admins'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+//            'name' => ['sometimes', 'string', 'max:255'],
+//            'surname' => ['sometimes', 'string', 'max:255'],
+//            'email' => ['required', 'string', 'email', 'max:255', 'unique:admins'],
+//            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
 }
