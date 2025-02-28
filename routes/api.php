@@ -13,7 +13,7 @@ use VS\Admin\Http\Controllers\AdminEmailVerificationController;
 //    return 'test';
 //})->name('verification.verify');
 
-Route::get('/email/verify/{id}/{hash}', [AdminEmailVerificationController::class, 'verify'])->middleware(['signed'])->name('verification.verify');
+Route::get('/email/verify/{id}/{hash}', [AdminEmailVerificationController::class, 'verify'])->name('api.admin.verification.verify');
 
 Route::middleware(['auth:admin'])->group(function () {
     Route::post('/email/verify/resend', [AdminEmailVerificationController::class, 'resend'])->name('api.admin.verification.resend');

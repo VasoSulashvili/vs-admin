@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use VS\Auth\Notifications\VerifyApiEmail;
 
 class Admin extends Authenticatable implements MustVerifyEmail
 {
@@ -32,5 +33,10 @@ class Admin extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyApiEmail('api.admin.verification.verify'));
     }
 }
