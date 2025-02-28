@@ -26,6 +26,7 @@ class VSAdminServiceProvider extends ServiceProvider
 
         // Register the package's routes
         Route::prefix('api/admin')
+            ->middleware('api')
             ->group(__DIR__ . '/../routes/api.php');
 
 
@@ -43,7 +44,6 @@ class VSAdminServiceProvider extends ServiceProvider
 
     protected function registerMiddleware()
     {
-        // Register the middleware into Laravel's global middleware stack
         $this->app['router']->aliasMiddleware('auth.admin', AdminAuth::class);
     }
 
