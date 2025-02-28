@@ -1,6 +1,6 @@
 <?php
 
-namespace VS\Admin\Controllers;
+namespace VS\Admin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use VS\Admin\Models\Admin;
@@ -12,7 +12,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        return Admin::all();
     }
 
     /**

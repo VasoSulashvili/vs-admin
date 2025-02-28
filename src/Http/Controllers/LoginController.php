@@ -4,6 +4,7 @@ namespace VS\Admin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use VS\Admin\Http\Resources\AdminResource;
 use VS\Admin\Models\Admin;
 use VS\Auth\Services\AuthService;
 
@@ -13,7 +14,7 @@ class LoginController extends Controller
 
     public function __construct()
     {
-        $this->authService = new AuthService(new Admin(), []);
+        $this->authService = new AuthService(new Admin());
     }
     /**
      * Handle the incoming request.
@@ -24,9 +25,6 @@ class LoginController extends Controller
 
         $token = $this->authService->createPersonalAccessToken($user);
 
-        return response()->json([
-            'user' => $user,
-            'token' => $token
-        ]);
+        return new AdminResource($user, ['token' => $token]);
     }
 }
