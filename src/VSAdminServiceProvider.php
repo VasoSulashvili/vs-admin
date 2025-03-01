@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use VS\Admin\Http\Middleware\AdminAuth;
+use Illuminate\Auth\Notifications\ResetPassword;
+use VS\Admin\Models\Admin;
 
 class VSAdminServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,11 @@ class VSAdminServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerMiddleware();
+
+        // Reset Password Link
+        ResetPassword::createUrlUsing(function (Admin $user, string $token) {
+            return 'https://example.com/reset-password?token='.$token;
+        });
 
         // Register the package's routes
         Route::prefix('api/admin')

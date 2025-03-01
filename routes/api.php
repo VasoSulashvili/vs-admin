@@ -7,6 +7,7 @@ use VS\Admin\Http\Controllers\AdminPasswordController;
 use VS\Admin\Http\Controllers\AdminController;
 use VS\Admin\Http\Controllers\AdminEmailVerificationController;
 use VS\Auth\Classes\EmailVerificationRoutes;
+use VS\Auth\Classes\PasswordRoutes;
 use VS\Auth\Classes\AuthRoutes;
 
 // Auth Routes
@@ -18,6 +19,9 @@ Route::get('test', function () {
 EmailVerificationRoutes::make(AdminEmailVerificationController::class, 'admin');
 
 AuthRoutes::make(AdminAuthController::class, 'admin');
+
+PasswordRoutes::make(AdminPasswordController::class, 'admin');
+
 
 
 // Authenticated Routes
