@@ -6,31 +6,22 @@ use VS\Admin\Http\Controllers\AdminAuthController;
 use VS\Admin\Http\Controllers\AdminPasswordController;
 use VS\Admin\Http\Controllers\AdminController;
 use VS\Admin\Http\Controllers\AdminEmailVerificationController;
+use VS\Auth\Classes\EmailVerificationRoutes;
+use VS\Auth\Classes\AuthRoutes;
 
 // Auth Routes
 // Guest Routes
-//Route::get('test', function () {
-//    return 'test';
-//})->name('verification.verify');
-
-Route::get('/email/verify/{id}/{hash}', [AdminEmailVerificationController::class, 'verify'])->name('api.admin.verification.verify');
-
-Route::middleware(['auth:admin'])->group(function () {
-    Route::post('/email/verify/resend', [AdminEmailVerificationController::class, 'resend'])->name('api.admin.verification.resend');
+Route::get('test', function () {
+    return 'test';
 });
 
+EmailVerificationRoutes::make(AdminEmailVerificationController::class, 'admin');
 
-Route::group(['middleware' => ['vs-auth.client.auth', 'api', ], 'as' => 'vs.admin.'], function () {
-    Route::post('register', [AdminAuthController::class, 'register'])->name('register');
-    Route::post('login', [AdminAuthController::class, 'login'])->middleware('verified')->name('login');
-});
+AuthRoutes::make(AdminAuthController::class, 'admin');
 
 
 // Authenticated Routes
-Route::group(['middleware' => ['api', 'force.json', 'auth:admin', 'verified'], 'as' => 'vs.admin.'], function () {
-
-    // Auth Routes
-    Route::post('logout', [AdminAuthController::class, 'logout'])->name('logout');
+Route::group(['middleware' => ['api', 'auth:admin', 'vs-auth.verified:admin']], function () {
 
     // Self Admin Routes
     Route::put('password/update', [AdminPasswordController::class, 'update'])->name('password.update');

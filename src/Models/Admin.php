@@ -2,9 +2,7 @@
 
 namespace VS\Admin\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -37,6 +35,6 @@ class Admin extends Authenticatable implements MustVerifyEmail
 
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new VerifyApiEmail('api.admin.verification.verify'));
+        $this->notify(new VerifyApiEmail('api.vs.admin.verification.verify'));
     }
 }

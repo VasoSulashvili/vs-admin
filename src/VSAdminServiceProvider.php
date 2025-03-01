@@ -27,6 +27,7 @@ class VSAdminServiceProvider extends ServiceProvider
         // Register the package's routes
         Route::prefix('api/admin')
             ->middleware('api')
+            ->as('api.vs.admin.')
             ->group(__DIR__ . '/../routes/api.php');
 
 

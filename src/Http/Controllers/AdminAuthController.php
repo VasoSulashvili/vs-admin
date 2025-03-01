@@ -11,43 +11,43 @@ use VS\Auth\Http\Requests\LoginRequest;
 use VS\Auth\Services\AuthService;
 use VS\Base\Classes\API;
 use Illuminate\Auth\Events\Registered;
-use VS\Base\Exceptions\APIException;
 
 class AdminAuthController extends Controller
 {
     protected $authService;
+
+
 
     public function __construct()
     {
         $this->authService = new AuthService(new Admin(), []);
     }
 
+
+
+    /**
+     * @param LoginRequest $request
+     * @return AdminResource
+     * @throws \VS\Base\Exceptions\APIException
+     */
     public function login(LoginRequest $request)
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::guard('admin')->attempt($credentials)) {
-            $admin = Auth::guard('admin')->user();
+        $user = $this->authService->login('admins', $credentials);
 
-            if (!$admin->hasVerifiedEmail()) {
+        $token = $this->authService->createPersonalAccessToken($user);
 
-                throw new APIException('Email not verified.', 403);
-
-            }
-
-            $user = $this->authService->login('admins', $request->all());
-
-            $token = $this->authService->createPersonalAccessToken($user);
-
-            return new AdminResource($user, ['token' => $token]);
-
-        } else {
-
-            throw new APIException('Unauthorized', 401);
-
-        }
+        return new AdminResource($user, ['token' => $token]);
     }
 
+
+
+    /**
+     * @param RegisterAdminRequest $request
+     * @return AdminResource
+     * @throws \VS\Base\Exceptions\APIException
+     */
     public function register(RegisterAdminRequest $request)
     {
         $user = $this->authService->register($request->all());
@@ -59,6 +59,11 @@ class AdminAuthController extends Controller
         return new AdminResource($user, $token);
     }
 
+
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function logout()
     {
         $this->authService->logout(Auth::user());

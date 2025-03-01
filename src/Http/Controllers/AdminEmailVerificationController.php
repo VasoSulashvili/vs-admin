@@ -7,24 +7,8 @@ use VS\Auth\Http\Controllers\EmailVerificationController;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
-class AdminEmailVerificationController extends EmailVerificationController implements HasMiddleware
+class AdminEmailVerificationController extends EmailVerificationController
 {
-    protected $guard = null;
-    public function __construct()
-    {
-        $this->guard = 'admin';
-    }
-
-    /**
-     * Get the middleware that should be assigned to the controller.
-     */
-    public static function middleware(): array
-    {
-        return [
-//            'auth',
-//            new Middleware('log', only: ['index']),
-//            new Middleware('subscribed', except: ['store']),
-        ];
-    }
+    public function __construct(protected $guard = 'admin') {}
 
 }
