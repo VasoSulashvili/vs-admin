@@ -21,6 +21,7 @@ class Admin extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'surname',
         'email',
         'password',
+        'two_fa_type',
     ];
 
     protected $hidden = [

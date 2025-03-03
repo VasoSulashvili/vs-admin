@@ -3,7 +3,6 @@
 namespace VS\Admin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use VS\Admin\Models\Admin;
@@ -12,8 +11,6 @@ use VS\Auth\Http\Requests\PasswordResetRequest;
 use VS\Auth\Http\Requests\UpdatePasswordRequest;
 use VS\Auth\Services\PasswordService;
 use VS\Base\Classes\API;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Hash;
 
 class AdminPasswordController extends Controller
 {
@@ -44,13 +41,10 @@ class AdminPasswordController extends Controller
     public function sendResetLinkEmail(EmailRequest $request)
     {
 
-        $result = $this->passwordService->sendResetLinkEmail(
-            'admin',
-            $request->input('email'),
-            'admins',
-            'api.vs.admin.password.reset');
+        $this->passwordService->sendResetLinkEmail('admin', $request->input('email'));
 
         return API::response(code: Response::HTTP_OK, message: 'Password reset link sent successfully');
+
     }
 
     public function reset(PasswordResetRequest $request)
@@ -66,6 +60,7 @@ class AdminPasswordController extends Controller
         }
 
         return API::response(code: Response::HTTP_OK, message: 'Password changed successfully');
+
     }
 
 }
